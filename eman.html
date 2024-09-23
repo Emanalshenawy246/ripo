@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+           
+            margin: 20px;
+            background-color: #f8f8f8;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .answer {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+   
+<div id="questions-container"></div>
+<button id="submit" onclick="results">Submit Answers</button>
+<div id="results-container"></div>
+<div id="result"></div>
+
+    <script>
+        
+const qaPairs = [
+    { question: "What is your favorite color?", answer: "Black" },
+    { question: "What is your town?", answer: "mansoura" },
+    { question: "What is your favorite food?", answer: "Pizza" },
+    { question: "What is your name?", answer: "eman" },
+    { question: "What is your dream job?", answer: "Developer" },
+    { question: "where are yoy from?", answer: "egypt" },
+    { question: "what is your faculty?", answer: "fcis" },
+    { question: "What is your age?", answer: "20" },
+    { question: "What is your favorite season?", answer: "Spring" },
+    { question: "how many days in week?", answer: "7" },
+];
+
+
+function getRandomQAPairs(qaPairs, numPairs) {
+    
+    for (let i = qaPairs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [qaPairs[i], qaPairs[j]] = [qaPairs[j], qaPairs[i]];
+    }
+   
+    return qaPairs.slice(0, numPairs);
+}
+
+
+const randomQAPairs = getRandomQAPairs(qaPairs, 5);
+
+
+const questionsContainer = document.getElementById('questions-container');
+randomQAPairs.forEach((pair, index) => {
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('question');
+    questionDiv.innerHTML = `<p>${index + 1}. ${pair.question}</p>
+         <input type="text" id="answer${index}" placeholder="answer">`;
+    questionsContainer.appendChild(questionDiv);
+});
+
+
+document.getElementById('submit').addEventListener('click', () => {
+    const resultsContainer = document.getElementById('results-container');
+    resultsContainer.innerHTML = '<h2>Your Answers:</h2>';
+
+    randomQAPairs.forEach((pair, index) => {
+        const userAnswer = document.getElementById(`answer${index}`).value;
+        resultsContainer.innerHTML += ` <br>
+                                        <strong>Your Answer:</strong> ${userAnswer} <br>
+                                        `;
+    });
+});
+
+
+    
+ 
+    </script>
+    
+</body>
+</html>
